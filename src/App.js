@@ -1,24 +1,31 @@
-import logo from './logo.svg';
 import './App.css';
+import { useReducer } from 'react';
+
+const initialState = {
+  count: 0
+}
+
+const counterReducer = (state, action) => {
+  switch(action.type) {
+    case 'INCREMENT':
+      return {...state, count: state.count + 1}
+    case "DEINCREMENT":
+      return {...state, count: state.count - 1}
+    default:
+      return state;
+  }
+}
 
 function App() {
+  const [state, dispatch] = useReducer(counterReducer, initialState);
+  console.log(state);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h3>{state.count}</h3>
+      <button onClick={() => dispatch({type: 'INCREMENT'})}>+</button>
+      <button onClick={() => dispatch({type: 'DEINCREMENT'})}>-</button>
+    </>
   );
 }
 
