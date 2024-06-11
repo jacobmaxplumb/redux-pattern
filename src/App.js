@@ -11,6 +11,8 @@ const todosReducer = (state, action) => {
   switch (action.type) {
     case "UPDATE_TEXT":
       return { ...state, text: action.payload };
+    case "ADD_TODO":
+      return { todos: [...state.todos, state.text], text: "" };
     default:
       return state;
   }
@@ -29,6 +31,12 @@ function App() {
           dispatch({ type: "UPDATE_TEXT", payload: e.target.value })
         }
       />
+      <button onClick={() => dispatch({ type: "ADD_TODO" })}>Add</button>
+      <ul>
+        {state.todos.map((todo, index) => (
+          <li key={index}>{todo}</li>
+        ))}
+      </ul>
     </>
   );
 }
